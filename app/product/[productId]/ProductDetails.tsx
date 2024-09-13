@@ -6,12 +6,13 @@ import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import { useCart } from "@/hooks/useCart";
 import { Rating } from "@mui/material";
+import { Product } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { MdCheckCircle } from "react-icons/md";
 
 interface ProductDetailsProps {
-  product: any;
+  product: Product;
 }
 
 export type SelectedImgType = {
@@ -109,11 +110,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         <div className="text-justify">{product.description}</div>
         <Horizontal />
         <div>
-          <span className="font-semibold">CATEGORY</span>
+          <span className="font-semibold">CATEGORY: </span>
           <span>{product.category}</span>
         </div>
         <div>
-          <span className="font-semibold">BRAND</span>
+          <span className="font-semibold">BRAND: </span>
           <span>{product.brand}</span>
         </div>
         <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>

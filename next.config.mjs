@@ -4,15 +4,15 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "m.media-amazon.com",
+        hostname: "firebasestorage.googleapis.com",
         port: "",
-        pathname: "/images/I/**",
+        pathname: "/v0/b/e-shop-3ecb8.appspot.com/o/*",
       },
       {
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
         port: "",
-        pathname: "/a/**",
+        pathname: "/a/*",
       },
     ],
   },

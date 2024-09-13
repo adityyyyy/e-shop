@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Heading } from "../components/Heading";
 import { Input } from "../components/inputs/Input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -10,8 +10,13 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { SafeUser } from "@/types";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  currentUser: SafeUser | null;
+}
+
+export default function LoginForm({ currentUser }: LoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const {
     register,
@@ -25,6 +30,13 @@ export default function LoginForm() {
   });
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/");
+      router.refresh();
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
@@ -46,6 +58,10 @@ export default function LoginForm() {
     });
   };
 
+  if (currentUser) {
+    return <p className="text-center">Logged in... Redirecting</p>;
+  }
+
   return (
     <>
       <Heading title="Sign in to E Shop" />
@@ -53,7 +69,9 @@ export default function LoginForm() {
         outline
         label="Continue with google"
         icon={AiOutlineGoogle}
-        onClick={() => {}}
+        onClick={() => {
+          signIn("google");
+        }}
       />
       <hr className="bg-slate-300 w-full h-px" />
       <Input
